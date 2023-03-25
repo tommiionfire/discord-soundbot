@@ -3,10 +3,10 @@ name: CI
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   lint:
@@ -15,9 +15,9 @@ jobs:
 
     steps:
       - name: Setup Node
-        uses: actions/setup-node@v2.4.1
+        uses: actions/setup-node@v3.3.0
         with:
-          node-version: '14.x'
+          node-version: '16.x'
 
       - name: Checkout
         uses: actions/checkout@v3
