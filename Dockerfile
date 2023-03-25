@@ -20,7 +20,7 @@ FROM base as builder
 
 # Install ffmpeg and other deps
 RUN apt-get -qq update > /dev/null && \
-    apt-get -qq -y install python make g++ tar xz-utils > /dev/null && \
+    apt-get -qq -y install git g++ make python3.11 tar xz-utils > /dev/null && \
     rm -rf /var/lib/apt/lists
 RUN wget -qO /tmp/ffmpeg.tar.xz https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-$(dpkg --print-architecture)-static.tar.xz && \
     tar -x -C /usr/local/bin --strip-components 1 -f /tmp/ffmpeg.tar.xz --wildcards '*/ffmpeg' && \
@@ -35,8 +35,8 @@ FROM builder AS build
 COPY --chown=node:node . /app
 
 # Install compile dependencies
-RUN yarn install --frozen-lockfile --silent && \
-    yarn cache clean --force --silent
+RUN yarn install --frozen-lockfile && \
+    yarn cache clean --force
 
 # Build project
 RUN yarn build
